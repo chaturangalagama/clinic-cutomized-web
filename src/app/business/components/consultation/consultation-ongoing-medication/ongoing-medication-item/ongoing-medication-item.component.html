@@ -1,0 +1,37 @@
+<div class="row mb-2" [formGroup]="item">
+    <div class="col-md-2">
+        <!-- <input name="itemCode" class="form-control form-control-sm" formControlName="itemCode"> -->
+        <ng-select name="itemCode" class='p-0 form-control form-control-sm  custom-select custom-select-medium-width' [items]="items" bindLabel='item.code' bindValue='item.code' (change)="onDrugSelect($event)" [addTag]="false" [virtualScroll]="true" [typeahead]="codesTypeahead"
+            [clearable]=false placeholder="Type to Search For New Item..." formControlName="itemCode">
+            <ng-template ng-header-tmp>
+                <div class="row">
+                    <div class="col-md-4 font-weight-semi-bold">Code</div>
+                    <div class="col-md-6 font-weight-semi-bold">Name</div>
+                    <!-- <div class="col-md-2 font-weight-semi-bold">Brand</div> -->
+                </div>
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item.item" let-index="index" let-search="searchTerm">
+                <div class="row">
+                    <div class="col-md-4">{{item.code}}</div>
+                    <div class="col-md-6">{{item.name}}</div>
+                    <!-- <div class="col-md-2">{{item.brand}}</div> -->
+                </div>
+            </ng-template>
+        </ng-select>
+    </div>
+    <div class="col-md-4">
+        <input name="medicationName" class="form-control form-control-sm" formControlName="medicationName">
+    </div>
+    <!-- <div class="col-md-3">
+        <input name="type" formControlName="type" class="form-control form-control-sm">
+    </div> -->
+    <div class="col-md-3">
+        <ng-select name="type" class='p-0 form-control form-control-sm custom-select custom-select-extra-medium-width' [items]="types" bindLabel='label' bindValue='value' [addTag]="false" [virtualScroll]="true" [clearable]=false
+        formControlName="type">
+        </ng-select>
+    </div>
+
+    <div class="col-md-3">
+        <input type="text" class="form-control form-control-sm datepicker" #dp="bsDatepicker" bsDatepicker [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',containerClass: 'theme-blue'}" [minDate]="minDate" formControlName="startDate">
+    </div>
+</div>

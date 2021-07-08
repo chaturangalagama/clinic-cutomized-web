@@ -1,0 +1,33 @@
+<div>
+    <alert></alert>
+    <div class="row">
+        <div class="col-6">
+            <app-clinic-notes [clinicNotes]="consultationFormGroup.get('consultation').get('clinicNotes')"></app-clinic-notes>
+        </div>
+        <div class="col-6">
+            <!-- {{ chargeFormGroup.get('overallChargeFormGroup').value | json}} -->
+            <app-payment-overall-charge [overallChargeFormGroup]="chargeFormGroup.get('overallChargeFormGroup')">
+            </app-payment-overall-charge>
+        </div>
+    </div>
+    <div class="card mb-0">
+        <div class="card-header d-flex justify-content-between">
+            <span class='font-weight-semi-bold'>DIAGNOSIS/PRESCRIPTION & CHARGES</span>
+        </div>
+        <div class="card-body">
+            <!-- <br> Patient Diagnosis: {{ consultationFormGroup.get('diagnosisIds').value | json }} -->
+            <app-consultation-diagnosis [diagnosisIds]="consultationFormGroup.get('diagnosisIds')"></app-consultation-diagnosis>
+        </div>
+    </div>
+    <!-- <div> DISPENSING ---- dispatchItems : {{ consultationFormGroup.get('dispatchItemEntities').value|json}} </div>
+    <br>
+    <div> DISPENSING ----- diagnosis : {{ consultationFormGroup.get('diagnosisIds').value|json}} </div> -->
+    <div class="btn-toolbar float-right" role="toolbar">
+        <div class="btn-group" role="group">
+            <button class="btn btn-large btn-brand-secondary" [disabled]="!(chargeFormGroup.valid && consultationFormGroup.valid)" (click)="onBtnSaveClicked()" (keyup)="onKeyUp($event)">SAVE & NEXT (F4)</button>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+</div>

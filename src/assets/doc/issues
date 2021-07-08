@@ -1,0 +1,6 @@
+Patient-detail page
+	- ONGOING MEDICATION not saving
+	- make dropdowns easy to search
+	- make default country sri lanka
+	
+Fuzzy logic for desiding payemnt from clinics - no of patients, active years of clinic etc
