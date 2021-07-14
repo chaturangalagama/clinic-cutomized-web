@@ -93,7 +93,7 @@ export class PatientDetailComponent implements OnInit, OnDestroy { //changed med
     private fb: FormBuilder,
     private printTemplateService: PrintTemplateService
   ) {
-    this.historyPage.size = 10;
+    this.historyPage.size = 20;
   }
 
   ngOnInit() {
@@ -161,6 +161,7 @@ export class PatientDetailComponent implements OnInit, OnDestroy { //changed med
   getPatientInfo() {
     if (this.store.getPatientId()) {
       // Get Patient Details
+      this.getAlerts();
       this.apiPatientInfoService.searchBy('systemuserid', this.store.getPatientId()).subscribe(
         res => {
           this.patientInfo = res.payload;
@@ -174,10 +175,10 @@ export class PatientDetailComponent implements OnInit, OnDestroy { //changed med
         }
       );
 
-      this.getAlerts();
+
       this.initHistoryList();
     } else {
-      alert('No Patient Details');
+      // alert('No Patient Details');
       this.router.navigate(['pages/patient/list']);
     }
   }
@@ -277,8 +278,8 @@ export class PatientDetailComponent implements OnInit, OnDestroy { //changed med
   }
 
   endUpdating() {
-    alert("Patient's details has been updated.");
-    this.router.navigate(['patient']);
+    // alert("Patient's details has been updated.");
+    // this.router.navigate(['patient']);
   }
 
 
@@ -301,11 +302,11 @@ export class PatientDetailComponent implements OnInit, OnDestroy { //changed med
     patientInfo.allergies.forEach(allergy => {
       alertArray.push(this.formatAlertArrayItem(allergy));
     });
-
+    
     this.medicalAlerts.forEach(alert => {
       medicalAlertArray.push(this.formatMedicalAlertArrayItem(alert));
     });
-
+    
     const birth = patientInfo.dob ? moment(patientInfo.dob, DISPLAY_DATE_FORMAT).toDate() : '';
     this.patientDetailFormGroup.get('basicInfoFormGroup').patchValue(
       {
@@ -795,16 +796,16 @@ export class PatientDetailComponent implements OnInit, OnDestroy { //changed med
             });
           }
 
-          const diagnosis = history.patientReferralEntity.diagnosisIds;
-          diagnosis.forEach(diagnosisItem => {
-            diagnosisArray.push(
-              this.fb.group({
-                // icd: diagnosisItem.icd10Code,
-                // description: diagnosisItem.icd10Term
-                id: diagnosisItem
-              })
-            );
-          });
+          // const diagnosis = history.patientReferralEntity.diagnosisIds; ---commented---
+          // diagnosis.forEach(diagnosisItem => {
+          //   diagnosisArray.push(
+          //     this.fb.group({
+          //       // icd: diagnosisItem.icd10Code,
+          //       // description: diagnosisItem.icd10Term
+          //       id: diagnosisItem
+          //     })
+          //   );
+          // });
 
           const items = history.patientReferralEntity.dispatchItemEntities;
           items.forEach(item => {
@@ -924,6 +925,7 @@ export class PatientDetailComponent implements OnInit, OnDestroy { //changed med
     this.historyPage.pageNumber = pageOffset;
     this.apiPatientVisitService.getPatientVisitHistoryPage(this.store.getPatientId(), this.historyPage).subscribe(
       res => {
+        console.log('histories before filtering ', res.payload);
         this.histories = res.payload
           .filter(
             history =>
@@ -940,7 +942,7 @@ export class PatientDetailComponent implements OnInit, OnDestroy { //changed med
         this.historyPage.pageNumber = res['pageNumber'];
         this.historyPage.totalPages = res['totalPages'];
         this.historyPage.totalElements = res['totalElements'];
-        console.log(this.histories);
+        console.log('histories ',this.histories);
         this.isHistoryListInit = true;
         this.updateHistoryList();
       },
@@ -1016,7 +1018,8 @@ export class PatientDetailComponent implements OnInit, OnDestroy { //changed med
               DISPLAY_DATE_TIME_NO_SECONDS_FORMAT
             ),
             diagnosis: {//changed diagnosisEntities to patientReferralEntity.diagnosisIds
-              value: history.patientReferralEntity.diagnosisIds.map(diagnosis => diagnosis.icd10Code)
+              // value: history.patientReferralEntity.diagnosisIds.map(diagnosis => diagnosis.icd10Code) ---commented---
+              value: ""
             },
             doctor: doctor ? doctor.name : '',
             clinic: clinic ? clinic.name : '',
@@ -1050,9 +1053,12 @@ export class PatientDetailComponent implements OnInit, OnDestroy { //changed med
       }, {});
   }
 
+  getOngoingMedication(value): void {
+    this.patientInfo['onGoingMedications'] = value;
+  }
+
   updatePatient() {
     const user = this.pick(this.patientInfo, PATIENT_INFO_KEYS);
-
     console.log('UPDATE USER', user);
 
     this.apiPatientInfoService.update(this.store.getPatientId(), user).subscribe(

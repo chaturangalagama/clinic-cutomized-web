@@ -65,7 +65,7 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (!this.store.getPatientId()) {
-      alert('No Patient Details');
+      // alert('No Patient Details');
       this.router.navigate(['pages/patient/list']);
       return;
     }
@@ -86,6 +86,7 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
           this.updateFormGroup();
         }
       });
+
   }
 
   // getPatientDetails() {
@@ -131,7 +132,7 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
   // Main
   updateFormGroup() {
     const dispatchItemEntities = this.consultationFormGroup.get('dispatchItemEntities') as FormArray;
-    if (dispatchItemEntities != undefined && this.consultationInfo.visitStatus == 'CLOSED') {
+    if (dispatchItemEntities != undefined && this.consultationInfo != undefined && this.consultationInfo.visitStatus == 'CLOSED') {
       dispatchItemEntities.value.forEach(element => {
         element.disable();
       });
@@ -178,7 +179,7 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
     console.log('this.consultationInfo: ', this.consultationInfo);
 
     this.paymentRequestInfo = { ...this.consultationFormGroup.value };
-    this.paymentRequestInfo.diagnosisIds = this.consultationFormGroup.get('diagnosisIds').value;
+    // this.paymentRequestInfo.diagnosisIds = this.consultationFormGroup.get('diagnosisIds').value; ---commented---
     this.paymentRequestInfo.patientReferral.patientReferrals = this.consultationFormGroup
       .get('patientReferral')
       .get('patientReferrals').value;
@@ -187,7 +188,7 @@ export class PatientDispensingComponent implements OnInit, OnDestroy {
       // this.paymentRequestInfo.dispatchItemEntities = this.caseChargeFormService.bindChargeItemsToDispatchitemEntities(
       //   this.consultationFormGroup.get('dispatchItemEntities')['controls']
       // );
-      this.paymentRequestInfo = this.consultationFormService.flattenDiagnosis(this.paymentRequestInfo);
+      // this.paymentRequestInfo = this.consultationFormService.flattenDiagnosis(this.paymentRequestInfo); ---commented---
       this.paymentRequestInfo = this.consultationFormService.checkConsultation(this.paymentRequestInfo);
       this.paymentRequestInfo = this.consultationFormService.checkPatientReferral(this.paymentRequestInfo);
       this.paymentRequestInfo = MedicalCertificateItemsArrayComponent.checkMedicalCertificates(this.paymentRequestInfo);

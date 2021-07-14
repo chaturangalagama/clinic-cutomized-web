@@ -368,4 +368,20 @@ export class ApiPatientVisitService {
       }
     );
   }
+
+  getInvoiceBreakdown(caseId: string): Observable<HttpResponseBody> {
+    return this.http.post<HttpResponseBody>(
+      `${this.API_CMS_MANAGEMENT_URL}/charging/invoice/breakdown/${caseId}`, JSON.stringify({}), {
+        headers: this.headers
+      }
+    );
+  }
+
+  recordNewPayment(caseId: string, payment: any): Observable<HttpResponseBody> {
+    return this.http.post<HttpResponseBody>(
+      `${this.API_CMS_MANAGEMENT_URL}/charging/payment/direct/${caseId}`, JSON.stringify(payment), {
+        headers: this.headers
+      }
+    );
+  }
 }

@@ -3,11 +3,13 @@
         <app-consultation-patient-alert-info [patientInfo]='patientInfo' [alerts]="alerts" [medicalAlerts]="medicalAlerts"></app-consultation-patient-alert-info>
     </div>
     <div class="col-md-1" *ngIf="showSaveDraftButton">
-        <button class="btn btn-md btn-bluish btn-block" (click)="onBtnSaveClicked()" [disabled]="!visitManagementFormGroup.get('consultationFormGroup').valid">Save As Draft</button>
+        <button class="btn btn-md btn-bluish btn-block" (click)="onBtnSaveClicked()" [disabled]="!visitManagementFormGroup.get('consultationFormGroup').valid">
+            Save As Draft</button>
     </div>
     <div *ngIf="isConsultStatus()" class="col-md-1">
-        <button class="btn btn-md btn-complete" style="margin-right:15px;" [disabled]="!visitManagementFormGroup.get('consultationFormGroup').valid" (click)="onBtnConsultSaveClicked()">Complete
-            Consultation</button>
+        <button class="btn btn-md btn-complete" style="margin-right:15px;" 
+        [disabled]="!visitManagementFormGroup.get('consultationFormGroup').valid" 
+        (click)="onBtnConsultSaveClicked()"> Complete Consultation</button>
     </div>
 </div>
 <div class="row mt-5 ml-0 clearfix" style="background-color:#f2f2f2">

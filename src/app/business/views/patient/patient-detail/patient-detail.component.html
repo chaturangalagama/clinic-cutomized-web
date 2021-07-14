@@ -34,18 +34,18 @@
           </div>
         </div>
       </div>
-      <div class="row mt-3">
+      <!-- <div class="row mt-3" [disa>
         <div class="col-md-12">
           <app-patient-detail-vaccination [patientInfo]="patientInfo" [historyInfo]="histories"></app-patient-detail-vaccination>
         </div>
-      </div>
+      </div> -->
 
       <div class="row mt-3">
         <div class="col-md-6">
           <app-consultation-problem-list [needRefresh]="needRefresh"></app-consultation-problem-list>
         </div>
         <div class="col-md-6">
-          <app-consultation-ongoing-medication [needRefresh]="needRefresh"></app-consultation-ongoing-medication>
+          <app-consultation-ongoing-medication (getOngoingMedication)="getOngoingMedication($event)" [needRefresh]="needRefresh"></app-consultation-ongoing-medication>
         </div>
       </div>
 
@@ -56,7 +56,7 @@
               <button class="btn btn-large btn-brand-primary" (click)="updatePatient()" [disabled]="!(patientDetailFormGroup.get('basicInfoFormGroup').valid &&
                                 patientDetailFormGroup.get('companyInfoFormGroup').valid &&
                                 patientDetailFormGroup.get('emergencyContactFormGroup').valid)">
-                SAVE& NEXT (F4)
+                SAVE
               </button>
             </div>
           </div>

@@ -45,14 +45,19 @@
 
             <!-- Printing Tab -->
             <tab heading="Printing" (select)="onSelect($event)">
-                <app-payment-print *ngIf="isVisitInPostConsult() || isVisitInPayment()" [chargeFormGroup]="visitManagementFormGroup.get('chargeFormGroup')" [consultationFormGroup]="visitManagementFormGroup.get('consultationFormGroup')" [patientInfo]="patientInfo" [consultationInfo]="consultationInfo"
+                <!-- <app-payment-print *ngIf="isVisitInPostConsult() || isVisitInPayment()" [chargeFormGroup]="visitManagementFormGroup.get('chargeFormGroup')" [consultationFormGroup]="visitManagementFormGroup.get('consultationFormGroup')" [patientInfo]="patientInfo" [consultationInfo]="consultationInfo"
+                    (tabSelected)="toggleTabTo($event)"></app-payment-print> ---commented--- -->
+                
+                <app-payment-print *ngIf="isVisitInPostConsult()" [chargeFormGroup]="visitManagementFormGroup.get('chargeFormGroup')" [consultationFormGroup]="visitManagementFormGroup.get('consultationFormGroup')" [patientInfo]="patientInfo" [consultationInfo]="consultationInfo"
                     (tabSelected)="toggleTabTo($event)"></app-payment-print>
             </tab>
 
             <!-- Payment Tab -->
             <tab heading="Payment" (select)="onSelect($event)">
-                <app-payment-collect *ngIf="isVisitInPayment()" [patientInfo]='patientInfo' (isRollbacked)="isRollbacked($event)"></app-payment-collect>
+                <!-- <app-payment-collect  *ngIf="isVisitInPayment()" [patientInfo]='patientInfo' (isRollbacked)="isRollbacked($event)"></app-payment-collect> ---commented--- -->
+                <app-payment-collect  *ngIf="isVisitInPostConsult()" [patientInfo]='patientInfo' (isRollbacked)="isRollbacked($event)"></app-payment-collect>
             </tab>
+            <!-- *ngIf="isVisitInPayment()" -->
         </tabset>
 
     </div>

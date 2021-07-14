@@ -49,6 +49,6 @@ export class ProblemListItemComponent implements OnInit {
   }
 
   getDoctorName(doctorId: string): string {
-    return (this.store.doctorList.find(doctor => doctor.id === doctorId) || { displayName: '' }).displayName;
+    return (this.store.doctorList.find(doctor => doctor.id === doctorId) || { name: '' }).name;
   }
 }

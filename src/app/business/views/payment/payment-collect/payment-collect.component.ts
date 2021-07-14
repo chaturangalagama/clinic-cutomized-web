@@ -64,7 +64,7 @@ export class PaymentCollectComponent implements OnInit {
 
   ngOnInit() {
     if (!this.store.getPatientId()) {
-      alert('No Patient Details');
+      // alert('No Patient Details');
       this.router.navigate(['pages/patient/list']);
       return;
     }
@@ -75,20 +75,20 @@ export class PaymentCollectComponent implements OnInit {
 
     this.collectFormGroup = this.paymentService.getCollectFormGroup();
     this.consultationInfo = this.paymentService.getConsultationInfo();
-    // if (!this.consultationInfo) {
-    //   this.apiCaseManagerService.getInvoiceBreakdown(this.store.getCaseId()).subscribe(
-    //     invoices => {
-    //       console.log('payload invoices', invoices);
-    //       this.paymentInfo = invoices.payload;
+    if (!this.consultationInfo) {
+      this.apiPatientVisitService.getInvoiceBreakdown("1010101").subscribe(
+        invoices => {
+          console.log('payload invoices', invoices);
+          this.paymentInfo = invoices.payload;
 
-    //       if (this.paymentInfo) {
-    //         this.updateCollectChargeFormGroup();
-    //         this.updatePaymentMethodFormGroup();
-    //       }
-    //     },
-    //     err => this.alertService.error(JSON.stringify(err.error.message))
-    //   );
-    // }
+          if (this.paymentInfo) {
+            this.updateCollectChargeFormGroup();
+            this.updatePaymentMethodFormGroup();
+          }
+        },
+        err => this.alertService.error(JSON.stringify(err.error.message))
+      );
+    }
 
     this.collectFormGroup
       .get('paymentFormGroup')
@@ -407,6 +407,10 @@ export class PaymentCollectComponent implements OnInit {
 
   executePay() {
     let billArr = [];
+    // console.log('invoice.visitId: ', invoice.visitId);
+    console.log('getPatientVisitRegistryId: ', this.store.getPatientVisitRegistryId());
+    // console.log('invoice.invoiceType: ', invoice.invoiceType);
+
     const invoice = this.paymentInfo.find(
       invoice => invoice.visitId === this.store.getPatientVisitRegistryId() && invoice.invoiceType === 'DIRECT'
     );
@@ -479,43 +483,44 @@ export class PaymentCollectComponent implements OnInit {
 
     console.log('pa-col bill: ', bill);
 
-    // forkJoin(
-    // bill.map( (payment,index) =>
-    // this.apiCaseManagerService.recordNewPayment(this.store.getCaseId(), bill).subscribe(
-    //   arr => {
-    //     this.apiPatientVisitService.completed(this.store.getPatientVisitRegistryId()).subscribe(
-    //       res => {
-    //         this.billNo = res.payload.billPaymentId;
-    //         const initialState = {};
-    //         this.bsModalRef = this.modalService.show(PaymentConfirmComponent, {
-    //           initialState,
-    //           class: 'modal-lg',
-    //           backdrop: 'static'
-    //         });
+    forkJoin(
+    bill.map( (payment,index) =>
+    this.apiPatientVisitService.recordNewPayment("1010101", bill).subscribe(
+      arr => {
+        this.apiPatientVisitService.completed(this.store.getPatientVisitRegistryId()).subscribe(
+          res => {
+            this.billNo = res.payload.billPaymentId;
+            const initialState = {};
+            this.bsModalRef = this.modalService.show(PaymentConfirmComponent, {
+              initialState,
+              class: 'modal-lg',
+              backdrop: 'static'
+            });
 
-    //         // Subscription for buttons on modal
-    //         this.bsModalRef.content.printClicked.subscribe(isPrint => {
-    //           this.printReceipt();
-    //           this.bsModalRef.hide();
-    //           this.router.navigate(['patient']);
-    //         });
+            // Subscription for buttons on modal
+            this.bsModalRef.content.printClicked.subscribe(isPrint => {
+              this.printReceipt();
+              this.bsModalRef.hide();
+              this.router.navigate(['patient']);
+            });
 
-    //         this.bsModalRef.content.nextClicked.subscribe(isNext => {
-    //           this.bsModalRef.hide();
-    //           this.router.navigate(['patient']);
-    //         });
-    //       },
-    //       err => {
-    //         this.alertService.error(JSON.stringify(err.error.message));
-    //         this.disablePayBtn = false;
-    //       }
-    //     );
-    //   },
-    //   err => {
-    //     this.alertService.error(JSON.stringify(err.error.message));
-    //   }
-    // );
-    //  );
+            this.bsModalRef.content.nextClicked.subscribe(isNext => {
+              this.bsModalRef.hide();
+              this.router.navigate(['patient']);
+            });
+          },
+          err => {
+            this.alertService.error(JSON.stringify(err.error.message));
+            this.disablePayBtn = false;
+          }
+        );
+      },
+      err => {
+        this.alertService.error(JSON.stringify(err.error.message));
+      }
+    )
+     ));
+
   }
 
   onKeyUp($event: KeyboardEvent) {

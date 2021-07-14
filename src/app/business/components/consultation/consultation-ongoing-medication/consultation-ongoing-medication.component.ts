@@ -9,6 +9,8 @@ import { StoreService } from '../../../services/store.service';
 import { debounceTime, distinctUntilChanged, debounce, takeUntil, take, switchMap } from 'rxjs/operators';
 // import { moment } from 'ngx-bootstrap/chronos/test/chain';
 import * as moment from 'moment';
+import {Output, EventEmitter} from '@angular/core';
+
 @Component({
   selector: 'app-consultation-ongoing-medication',
   templateUrl: './consultation-ongoing-medication.component.html',
@@ -17,6 +19,7 @@ import * as moment from 'moment';
 export class ConsultationOngoingMedicationComponent implements OnInit {
 
   @Input() needRefresh: Subject<boolean>;
+  @Output() public getOngoingMedication = new EventEmitter<string>();
   patientInfoRefresh: BehaviorSubject<any>;
   itemFormGroup: FormGroup;
   patientInfo;
@@ -48,13 +51,16 @@ export class ConsultationOngoingMedicationComponent implements OnInit {
       );
     //Previous Code
     this.patientInfoRefresh = this.store.getPatientInfoRefresh();
-    // this.patientInfoRefresh.subscribe( info =>{
-    //   this.reset();
-    //   this.patientInfo = info;
-    //   const onGoingMedications  = info.onGoingMedications as Array<any>;
-    //   this.populateData(onGoingMedications);
-    // });
+    this.patientInfoRefresh.subscribe( info =>{
+      this.reset();
+      this.patientInfo = info;
+      const onGoingMedications  = info.onGoingMedications as Array<any>;
+      if(onGoingMedications!=undefined){
+        this.populateData(onGoingMedications);
+      }
+    });
   }
+
 
   populateData(onGoingMedications){
     const itemsFormArray = this.itemFormGroup.get('itemsFormArray') as FormArray;
@@ -133,6 +139,8 @@ export class ConsultationOngoingMedicationComponent implements OnInit {
       delete payload['id'];
       delete payload['fileMetaData'];
       this.patientInfoRefresh.next(res.payload);
+      this.getOngoingMedication.emit(res.payload.onGoingMedications);
+      // this.refreshStore();
     },
     err => {
       this.alertService.error(JSON.stringify(err.error.message));

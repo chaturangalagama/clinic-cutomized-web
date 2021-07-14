@@ -106,13 +106,13 @@ export class ApiPatientInfoService {
   }
 
   listAlert(patientId: string): Observable<HttpResponseBody> {
-    return this.http.post<HttpResponseBody>(
-      `${this.API_PATIENT_INFO_URL}/medical-alerts/list/${patientId}`,
-      JSON.stringify({}),
-      {
-        headers: this.headers
-      }
-    );
+      return this.http.post<HttpResponseBody>(
+        `${this.API_PATIENT_INFO_URL}/medical-alerts/list/${patientId}`,
+        JSON.stringify({}),
+        {
+          headers: this.headers
+        }
+      );
   }
 
   deleteAlert(medicalAlert): Observable<HttpResponseBody> {

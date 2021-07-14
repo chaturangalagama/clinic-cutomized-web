@@ -16,23 +16,21 @@
     <!-- <pre>{{fgDate.value.dateRange}}</pre> -->
   </div>
 
-  <div class="row" *ngIf="vitals.length>0">
+  <!-- <div class="row" *ngIf="vitals.length>0">
     <div class="col-md">
       <ng-select class="p-0 form-control form-control-sm custom-select" id="vitalTrendSelect" [dropdownPosition]="'bottom'"
         [items]="vitals" bindLabel='name' bindValue='code' (change)="onVitalOptionSelected($event)" [(ngModel)]='vitalSelecteds'
         [virtualScroll]="true" [multiple]="true" appendTo="body"></ng-select>
     </div>
+  </div> -->
 
-
-  </div>
-
-  <div class="row mb-4" *ngIf="vitals.length>0">
+  <!-- <div class="row mb-4" *ngIf="vitals.length>0">
     <div class="w-100 h-100">
       <canvas baseChart *ngIf="chartData.length>0" [chartType]="lineChartType" [datasets]="chartData" [options]="chartOptions"
         (chartClick)="onChartClick($event)">
       </canvas>
     </div>
-  </div>
+  </div> -->
   <div class="mt-4 table-responsive-md" *ngIf='vitals.length>0'>
     <table class="table table-bordered table-striped">
       <!-- X-axis -->

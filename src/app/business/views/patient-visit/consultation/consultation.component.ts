@@ -112,10 +112,10 @@ export class ConsultationComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log("#0009 Consultation ----> Dispatch: ", value);
     });
 
-    this.visitManagementFormGroup.get('consultationFormGroup').get('diagnosisIds').valueChanges.pipe(
-      distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))).subscribe( value =>{
-      console.log("#0009 Consultation ----> Diagnosis: ", value);
-    });
+    // this.visitManagementFormGroup.get('consultationFormGroup').get('diagnosisIds').valueChanges.pipe(
+    //   distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))).subscribe( value =>{
+    //   console.log("#0009 Consultation ----> Diagnosis: ", value); 
+    // }); ---commented---
   }
 
   ngAfterViewInit() {
@@ -159,8 +159,8 @@ export class ConsultationComponent implements OnInit, OnDestroy, AfterViewInit {
       dispatchItemFormArray
     );
 
-    const diagnosisArray = this.visitManagementFormGroup.get('consultationFormGroup').get('diagnosisIds') as FormArray;
-    this.consultationFormService.patchDiagnosisToFormArray(refEntity, diagnosisArray);
+    // const diagnosisArray = this.visitManagementFormGroup.get('consultationFormGroup').get('diagnosisIds') as FormArray; ---commented---
+    // this.consultationFormService.patchDiagnosisToFormArray(refEntity, diagnosisArray);
 
     const referralArray: FormArray = this.visitManagementFormGroup
       .get('consultationFormGroup')
@@ -327,13 +327,14 @@ export class ConsultationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   isVisitInPostConsult() {
-    // console.log("visit in postconsult");
     return this.store.getVisitStatus() === 'POST_CONSULT' && this.permissionsService.getPermission('ROLE_CA');
   }
 
-  isVisitInPayment() {
-    return this.store.getVisitStatus() === 'PAYMENT' && this.permissionsService.getPermission('ROLE_CA');
-  }
+  // isVisitInPayment() { ---commented---
+  //   console.log('isVisitInPayment = ', this.store.getVisitStatus());
+  //   console.log('Permission = ', this.permissionsService.getPermission('ROLE_CA'));
+  //   return this.store.getVisitStatus() === 'PAYMENT' && this.permissionsService.getPermission('ROLE_CA');
+  // }
 
   isRollbacked(event) {
     console.log('event', event);

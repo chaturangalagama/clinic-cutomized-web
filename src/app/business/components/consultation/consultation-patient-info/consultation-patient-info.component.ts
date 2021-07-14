@@ -142,24 +142,26 @@ export class ConsultationPatientInfoComponent implements OnInit, OnDestroy {
     );
 
     this.medicalAlerts = Array<MedicalAlertResponse>();
-    this.apiPatientInfoService.listAlert(patientId).subscribe(
-      res => {
-        if (res.payload) {
-          const alertDetails = <Array<MedicalAlertResponse>>res.payload.details;
-          const tempAlertArray = Array<MedicalAlertResponse>();
-          alertDetails.forEach(alert => {
-            if (alert.alertType !== 'ALLERGY') {
-              tempAlertArray.push(alert);
-            }
-          });
-          this.medicalAlerts = tempAlertArray;
-          console.log('MEDICAL ALERTS: ', this.medicalAlerts);
+    if(patientId != undefined){
+      this.apiPatientInfoService.listAlert(patientId).subscribe(
+        res => {
+          if (res.payload) {
+            const alertDetails = <Array<MedicalAlertResponse>>res.payload.details;
+            const tempAlertArray = Array<MedicalAlertResponse>();
+            alertDetails.forEach(alert => {
+              if (alert.alertType !== 'ALLERGY') {
+                tempAlertArray.push(alert);
+              }
+            });
+            this.medicalAlerts = tempAlertArray;
+            console.log('MEDICAL ALERTS: ', this.medicalAlerts);
+          }
+        },
+        err => {
+          this.alertService.error(JSON.stringify(err.error.message));
         }
-      },
-      err => {
-        this.alertService.error(JSON.stringify(err.error.message));
-      }
-    );
+      );
+    }
   }
 
   initPatientInfo(

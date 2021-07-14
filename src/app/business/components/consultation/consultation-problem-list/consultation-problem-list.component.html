@@ -38,10 +38,10 @@
                 </div>
                 <div class="form-group col-md-4"></div>
                 <div class="form-group col-md-2 mb-0 align-self-center">
-                    <button class='btn-sm-sub btn-brand-secondary brand pull-right' (click)='onAddNote()'>+Add Note</button>
+                    <button [class.disable-add-note]="!patientNotesForm.valid" class='btn-sm-sub btn-brand-secondary brand pull-right' (click)='onAddNote()' 
+                    [disabled]="!patientNotesForm.valid">+Add Note</button>
                 </div>
             </div>
-
             <!-- Display All Notes Section -->
             <div class="px-2">
                 <ng-container *ngIf="patientNotesGrouped">

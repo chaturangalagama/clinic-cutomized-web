@@ -45,7 +45,7 @@ export const PATIENT_LIST_ENTRY_COUNTS_DROPDOWN = [
 
 export const PATIENT_STATUSES = ['INITIAL', 'CONSULT', 'POST_CONSULT', 'PAYMENT', 'COMPLETE'];
 
-export const PATIENT_LIST_ACTION_LIST_DROPDROWN =  ['Vital Signs', 'Update Visit Details'];
+export const PATIENT_LIST_ACTION_LIST_DROPDROWN =  ['Vital Signs'];//, 'Update Visit Details'];
 
 export const ALLERGY_TYPES = [
   'SPECIFIC_DRUG',
@@ -139,7 +139,8 @@ export const PATIENT_INFO_KEYS = [
   'nationality',
   'maritalStatus',
   'allergies',
-  'patientVaccinations'
+  'patientVaccinations',
+  'onGoingMedications'
 ];
 
 export const VISIT_MANAGEMENT_TABS = [

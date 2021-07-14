@@ -32,6 +32,12 @@ export class PatientDetailTagComponent implements OnInit {
 
   ngOnInit() {
     this.subscribeValueChanges();
+    console.log("medicalAlertFormGroup =", this.medicalAlertFormGroup);
+    // console.log("medicalAlertFormGroup alertArray =", this.medicalAlertFormGroup.get('alertArray')[0].);
+    // const alertArray = this.medicalAlertFormGroup.get('alertArray') as FormArray;
+    // const alerts = [];
+
+    // console.log('alertArray: ', data);
   }
 
   addAllergy() {

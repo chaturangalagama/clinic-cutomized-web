@@ -98,7 +98,7 @@ export class PatientVisitComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (!this.store.getPatientId()) {
-      alert('No Patient Details');
+      // alert('No Patient Details');
       this.router.navigate(['pages/patient/list']);
       return;
     }
@@ -150,10 +150,10 @@ export class PatientVisitComponent implements OnInit, OnDestroy {
       console.log("#0009 VSM ----> Dispatch: ", value);
     });
 
-    this.visitManagementFormGroup.get('consultationFormGroup').get('diagnosisIds').valueChanges.pipe(
-      distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))).subscribe( value =>{
-      console.log("#0009 VSM ----> Diagnosis: ", value);
-    });
+    // this.visitManagementFormGroup.get('consultationFormGroup').get('diagnosisIds').valueChanges.pipe(
+    //   distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))).subscribe( value =>{
+    //   console.log("#0009 VSM ----> Diagnosis: ", value);
+    // }); ---commented---
   }
 
   modifySubPaneDivClasses() {
@@ -620,13 +620,15 @@ export class PatientVisitComponent implements OnInit, OnDestroy {
           console.log('PAYMENT_TEMP_STORE', result);
         })
         .catch(err => {});
-    } else {
+    } 
+    else {
+      // this.store.setVisitStatus('PAYMENT');
       // delete
-      await this.tempStore
-        .tempStoreRemove(this.multipleAccessKey)
-        .toPromise()
-        .then(resss => {})
-        .catch(err => {});
+      // await this.tempStore  ---commented---
+      //   .tempStoreRemove(this.multipleAccessKey)
+      //   .toPromise()
+      //   .then(resss => {})
+      //   .catch(err => {});
     }
   }
 
@@ -789,10 +791,10 @@ export class PatientVisitComponent implements OnInit, OnDestroy {
     this.consultation.dispatchItemEntities = this.caseChargeFormService.bindChargeItemsToDispatchitemEntities(
       this.visitManagementFormGroup.get('consultationFormGroup').get('dispatchItemEntities')['controls']
     );
-    this.consultation.diagnosisIds = this.visitManagementFormGroup
-      .get('consultationFormGroup')
-      .get('diagnosisIds').value;
-    this.consultation = this.consultationFormService.flattenDiagnosis(this.consultation);
+    // this.consultation.diagnosisIds = this.visitManagementFormGroup
+    //   .get('consultationFormGroup')
+    //   .get('diagnosisIds').value; ---commented---
+    // this.consultation = this.consultationFormService.flattenDiagnosis(this.consultation); ---commented---
     this.consultation = this.consultationFormService.checkConsultation(this.consultation);
     this.consultation = this.consultationFormService.checkPatientReferral(this.consultation);
     this.consultation = MedicalCertificateItemsArrayComponent.checkMedicalCertificates(this.consultation);

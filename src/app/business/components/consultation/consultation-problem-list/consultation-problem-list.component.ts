@@ -220,9 +220,10 @@ export class ConsultationProblemListComponent implements OnInit {
       this.apiCmsManagementService.addPatientNote(this.store.getPatientId(), note).subscribe(
         res => {
           console.log('Add Note', res.payload);
-          this.patientNotesForm.get('note').patchValue('');
-          this.patientNotesForm.get('type').patchValue('');
-          this.patientNotesForm.get('date').patchValue('');
+          // this.patientNotesForm.get('note').patchValue('');
+          // this.patientNotesForm.get('type').patchValue('');
+          // this.patientNotesForm.get('date').patchValue('');
+          this.patientNotesForm.reset();
           if (res.payload && res.payload['noteDetails']) {
             this.patientNotes = res.payload['noteDetails'];
             this.refreshData(true);

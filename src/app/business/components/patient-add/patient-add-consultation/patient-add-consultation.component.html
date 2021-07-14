@@ -16,7 +16,7 @@
         </div>
         <div class="col-md-6">
             <ng-select class="custom-select form-control-sm custom-select-extra-medium-width" type="text" bindValue='value'
-                bindLabel='doctor' name="doctor" [items]="doctors" formControlName="preferredDoctor"></ng-select>
+                 name="doctor" [items]="doctors" formControlName="preferredDoctor"></ng-select>
             <errors [control]="consultationInfoFormGroup.get('preferredDoctor')"></errors>
         </div>
     </div>

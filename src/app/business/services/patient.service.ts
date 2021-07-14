@@ -222,9 +222,10 @@ export class PatientService {
   }
 
   createPatientDetailHistoryFormGroup(): FormGroup {
+    console.log("from date =" , new Date(new Date().setFullYear(new Date().getFullYear() - 3)))
     return this.fb.group({
       historyFilterFormGroup: this.fb.group({
-        dateFrom: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
+        dateFrom: new Date(new Date().setFullYear(new Date().getFullYear() - 10)),
         dateTo: new Date(),
         doctors: { value: [] },
         doctor: '',
@@ -434,7 +435,7 @@ export class PatientService {
         dateTo: new Date()
       }),
       historyFilterFormGroup: this.fb.group({
-        dateFrom: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
+        dateFrom: new Date(new Date().setFullYear(new Date().getFullYear() - 10)),
         dateTo: new Date(),
         doctors: { value: [] },
         doctor: '',

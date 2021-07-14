@@ -231,7 +231,7 @@ export class PrescriptionItemComponent implements OnInit {
         // Retrieve price
         this.updatePrice.emit(true);
         // this.fillItemValues(data);
-        this.updateInventories();
+        // this.updateInventories(); ---commented-10/07/2021---
       });
 
     // Instruction Changes
@@ -279,7 +279,7 @@ export class PrescriptionItemComponent implements OnInit {
           this.topChargeItemDescription.qty = qty;
           // this.adjustedUnitPrice.patchValue(0);
           this.calculateCost(qty);
-          this.updateInventories();
+          // this.updateInventories();---commented-10/07/2021---
         }
       });
 

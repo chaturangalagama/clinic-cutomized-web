@@ -7,10 +7,14 @@ import { BsModalService } from 'ngx-bootstrap';
 import { DrugItem, DosageInstruction } from '../../../../app/util/objects/DrugItem';
 import { Subject, timer } from 'rxjs';
 import { FormArray, FormControl, Validators, FormGroup } from '@angular/forms';
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, enableProdMode } from '@angular/core';
 import { TopDrugDescription } from '../../../../app/util/objects/DrugDescription';
 import { StoreService } from '../../../services/store.service';
 import { takeUntil, filter, distinctUntilChanged, tap, debounceTime, switchMap} from 'rxjs/operators';
+import { ChargeFormService } from '../../../services/charge-form.service';
+
+enableProdMode();
+
 @Component({
   selector: 'app-consultation-prescription',
   templateUrl: './consultation-prescription.component.html',
@@ -43,7 +47,8 @@ export class ConsultationPrescriptionComponent implements OnInit, OnDestroy {
     private store: StoreService,
     private modalService: BsModalService,
     private alertService: AlertService,
-    private apiCmsManagementService: ApiCmsManagementService
+    private apiCmsManagementService: ApiCmsManagementService,
+    private caseChargeFormService: ChargeFormService
   ) {}
 
   ngOnInit() {
@@ -133,7 +138,7 @@ export class ConsultationPrescriptionComponent implements OnInit, OnDestroy {
 
   onDrugSelect(option) {
     this.drugSelected = option;
-    // this.dispatchItemEntities = this.caseChargeFormService.buildDrugDispatchDetails(option.item);
+    this.dispatchItemEntities = this.caseChargeFormService.buildDrugDispatchDetails(option.item);
     this.searchKey.reset();
     this.searchKey.patchValue(null);
   }

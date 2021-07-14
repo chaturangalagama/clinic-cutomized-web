@@ -87,9 +87,9 @@ export class PrintTemplateService {
           // CA / Other Rolew
           currentUserName = currentUser.firstName + ' ' + currentUser.lastName;
         }
-        this.apiCmsManagementService.searchDiagnosisByIds(patientReferralEntity.diagnosisIds).subscribe(
-          res => {
-            const diagnosis = res.payload.map(d => `${d.icd10Code} [${d.icd10Term}]`);
+        // this.apiCmsManagementService.searchDiagnosisByIds(patientReferralEntity.diagnosisIds).subscribe( ---commented---
+        //   res => {
+        //     const diagnosis = res.payload.map(d => `${d.icd10Code} [${d.icd10Term}]`);
             // this.apiCaseManageService.searchCase(consultationInfo.caseId).subscribe(res => {
             //   const caseNumber = res.payload.caseNumber;
             //   const salesOrder = res.payload.salesOrder;
@@ -331,10 +331,10 @@ export class PrintTemplateService {
             //     err => this.alertService.error(JSON.stringify(err.error.message))
             //   );
             // }),
-              err => this.alertService.error(JSON.stringify(err.error.message));
-          },
-          err => this.alertService.error(JSON.stringify(err.error.message))
-        );
+        //       err => this.alertService.error(JSON.stringify(err.error.message));
+        //   },
+        //   err => this.alertService.error(JSON.stringify(err.error.message))
+        // );
       },
       err => this.alertService.error(JSON.stringify(err.error.message))
     );

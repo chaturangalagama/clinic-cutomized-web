@@ -56,7 +56,7 @@ export class ConsultationFormService {
   createConsultationFormGroup() {
     return this.fb.group({
       consultation: this.initConsultation(),
-      diagnosisIds: this.initDiagnosis(),
+      // diagnosisIds: this.initDiagnosis(), ---commented---
       medicalCertificates: MedicalCertificateItemsArrayComponent.buildItems(),
       consultationFollowup: this.initFollowupDua(),
       patientReferral: this.fb.group({ patientReferrals: this.initPatientReferral() }),
@@ -93,19 +93,19 @@ export class ConsultationFormService {
     }
   }
 
-  flattenDiagnosis(consultation) {
-    const diagnosisIds = [];
+  // flattenDiagnosis(consultation) { ---commented---
+  //   const diagnosisIds = [];
 
-    consultation.diagnosisIds.forEach(diagnosis => {
-      console.log('diagnosis: ', diagnosis);
-      if (diagnosis.id !== '' || diagnosis.id !== undefined || diagnosis.id.length > 0) {
-        diagnosisIds.push(diagnosis.id);
-      }
-    });
+  //   consultation.diagnosisIds.forEach(diagnosis => {
+  //     console.log('diagnosis: ', diagnosis);
+  //     if (diagnosis.id !== '' || diagnosis.id !== undefined || diagnosis.id.length > 0) {
+  //       diagnosisIds.push(diagnosis.id);
+  //     }
+  //   });
 
-    consultation.diagnosisIds = diagnosisIds;
-    return consultation;
-  }
+  //   consultation.diagnosisIds = diagnosisIds;
+  //   return consultation;
+  // }
 
   // ITEM --- CMS-DUA
   buildDoseInstruction(code: string, instruct: string) {
@@ -300,48 +300,48 @@ export class ConsultationFormService {
     this.diagnosis.removeAt(index);
   }
 
-  patchDiagnosisToFormArray(refEntity, diagnosisArray: FormArray) {
-    if (refEntity.diagnosisIds) {
-      this.apiCmsManagementService
-        .searchDiagnosisByIds(refEntity.diagnosisIds)
-        .pipe(
-          debounceTime(INPUT_DELAY),
-          distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
-        )
-        .subscribe(
-          res => {
-            const diagnosis = res.payload;
-            while (diagnosisArray.length > 0) {
-              diagnosisArray.removeAt(0);
-            }
-            if (diagnosis.length) {
-              diagnosis.forEach((diagnosisItem,index) => {
-                diagnosisArray.push(
-                  this.fb.group({
-                    icd10Code: diagnosisItem.icd10Code,
-                    icd10Id: diagnosisItem.icd10Id,
-                    icd10Term: diagnosisItem.icd10Term,
-                    id: diagnosisItem.id,
-                    snomedId: diagnosisItem.snomedId,
-                    status: diagnosisItem.status
-                  })
-                );
-              });
-            } else {
-              this.initDiagnosis();
-            }
-          },
-          err => {
-            this.alertService.error(JSON.stringify(err.error.message));
-          }
-        );
-    } else{
-      while (diagnosisArray.length > 0) {
-        diagnosisArray.removeAt(0);
-      }
-      this.initDiagnosis();
-    }
-  }
+  // patchDiagnosisToFormArray(refEntity, diagnosisArray: FormArray) { ---commented---
+  //   if (refEntity.diagnosisIds) {
+  //     this.apiCmsManagementService
+  //       .searchDiagnosisByIds(refEntity.diagnosisIds)
+  //       .pipe(
+  //         debounceTime(INPUT_DELAY),
+  //         distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
+  //       )
+  //       .subscribe(
+  //         res => {
+  //           const diagnosis = res.payload;
+  //           while (diagnosisArray.length > 0) {
+  //             diagnosisArray.removeAt(0);
+  //           }
+  //           if (diagnosis.length) {
+  //             diagnosis.forEach((diagnosisItem,index) => {
+  //               diagnosisArray.push(
+  //                 this.fb.group({
+  //                   icd10Code: diagnosisItem.icd10Code,
+  //                   icd10Id: diagnosisItem.icd10Id,
+  //                   icd10Term: diagnosisItem.icd10Term,
+  //                   id: diagnosisItem.id,
+  //                   snomedId: diagnosisItem.snomedId,
+  //                   status: diagnosisItem.status
+  //                 })
+  //               );
+  //             });
+  //           } else {
+  //             this.initDiagnosis();
+  //           }
+  //         },
+  //         err => {
+  //           this.alertService.error(JSON.stringify(err.error.message));
+  //         }
+  //       );
+  //   } else{
+  //     while (diagnosisArray.length > 0) {
+  //       diagnosisArray.removeAt(0);
+  //     }
+  //     this.initDiagnosis();
+  //   }
+  // }
 
   // Patch Dispatch to Formgroup
   patchDispatchItemsToFormArray(refEntity, dispatchItemEntities: FormArray) {

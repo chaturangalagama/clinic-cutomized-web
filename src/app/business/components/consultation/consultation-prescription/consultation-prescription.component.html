@@ -5,9 +5,9 @@
     </div>
     <!-- CON-PRE ---- {{ dispatchItemEntities.value | json}} -->
     <div class="p-1" style="display: -webkit-inline-box;">
-        <div class="col-11">
-            <!-- <input class="form-control form-control-sm" type="text" placeholder="Advanced Search... "/> -->
-            <ng-select name="drug-code" class='p-0 form-control form-control-sm  custom-select custom-select-medium-width' [items]="items" bindLabel='item.code' bindValue='item.id' (change)="onDrugSelect($event)" [addTag]="false" [virtualScroll]="true" [typeahead]="codesTypeahead"
+        <div class="col-9">
+            <!-- <input class="form-control form-control-sm" type="text" placeholder="Advanced Search... "/> custom-select custom-select-medium-width-->
+            <ng-select name="drug-code" class='p-0 form-control form-control-sm  ' [items]="items" bindLabel='item.code' bindValue='item.id' (change)="onDrugSelect($event)" [addTag]="false" [virtualScroll]="true" [typeahead]="codesTypeahead"
                 [clearable]=false placeholder="Type to Search For New Item..." [formControl]="searchKey">
                 <ng-template ng-header-tmp>
                     <div class="row">
@@ -25,9 +25,10 @@
                 </ng-template>
             </ng-select>
         </div>
-        <div class="col-1 pl-0">
+        <div class="col-3 pl-0">
             <!-- <svg-icon (click)="onSearchClicked()" src='/assets/svg/othericons/lookup.svg'></svg-icon> -->
-            <svg-icon style="cursor:pointer;" (click)="onSearchClicked()" src='/assets/svg/othericons/lookup.svg'></svg-icon>
+            <button class="btn btn-sm btn-ad-search btn-bluish" (click)="onSearchClicked()">Advanced Search</button>
+            <!-- <svg-icon style="cursor:pointer;" (click)="onSearchClicked()" src='/assets/svg/othericons/lookup.svg'></svg-icon> -->
         </div>
     </div>
     <!-- <div class="sub-heading-grey mx-0 cursor-pointer" (click)="onSearchClicked()">
